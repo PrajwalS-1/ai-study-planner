@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Study Plan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h2>Your Study Plan</h2>
+
+<!-- BUTTONS -->
+<div class="result-buttons">
+
+    <!-- DOWNLOAD -->
+    <form method="POST" action="/download">
+        <input type="hidden" name="plan" value='{{ plan }}'>
+        <button type="submit">📄 Download PDF</button>
+    </form>
+
+    <!-- REGENERATE -->
+    <form method="POST" action="/regenerate">
+
+        {% for s in subjects %}
+            <input type="hidden" name="subjects" value="{{ s }}">
+        {% endfor %}
+
+        {% for t in topics %}
+            <input type="hidden" name="topics" value="{{ t }}">
+        {% endfor %}
+
+        {% for d in difficulties %}
+            <input type="hidden" name="difficulty" value="{{ d }}">
+        {% endfor %}
+
+        <input type="hidden" name="duration" value="{{ duration }}">
+        <input type="hidden" name="duration_type" value="{{ dtype }}">
+        <input type="hidden" name="hours" value="{{ hours }}">
+
+        <button type="submit">🔄 Regenerate</button>
+    </form>
+
+</div>
+
+<!-- CARDS -->
+<div class="cards-container">
+
+    {% for day in plan %}
+    <div class="card">
+        <h3>Day {{ loop.index }}</h3>
+
+        {% for t in day %}
+        <p>
+            <input type="checkbox">
+            {{ t[0] }} ({{ t[1] }} hrs)
+        </p>
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+</div>
+
+</body>
+</html>

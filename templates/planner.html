@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Plan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function generateFields() {
+            let n = document.getElementById("num_subjects").value;
+            let container = document.getElementById("subjects_container");
+            container.innerHTML = "";
+
+            for (let i = 1; i <= n; i++) {
+                container.innerHTML += `
+                    <h3>Subject ${i}</h3>
+                    <input name="subjects" placeholder="Subject Name" required><br>
+                    <input name="topics" placeholder="Topic1, Topic2" required><br>
+
+                    <label>Difficulty:</label>
+                    <select name="difficulty">
+                        <option>Easy</option>
+                        <option>Medium</option>
+                        <option>Hard</option>
+                    </select><br><br>
+                `;
+            }
+        }
+    </script>
+</head>
+
+<body class="planner-page">
+
+<h2>Create Your Study Plan</h2>
+
+<div class="subject-input-box">
+    <label>Number of Subjects:</label><br>
+    <input type="number" id="num_subjects" min="1"><br>
+
+    <button type="button" onclick="generateFields()" class="add-btn">
+        Add Subjects
+    </button>
+</div>
+
+<form method="POST">
+
+    <div id="subjects_container"></div>
+
+    <label>Study Duration:</label><br>
+    <input type="number" name="duration" placeholder="Enter duration (e.g., 5)" required><br>
+
+    <select name="duration_type">
+        <option>Days</option>
+        <option>Weeks</option>
+        <option>Months</option>
+    </select><br>
+
+    <label>Study Hours Per Day:</label><br>
+    <input type="number" name="hours" placeholder="Hours per day" required><br>
+
+    <button type="submit">Generate Plan</button>
+
+</form>
+
+</body>
+</html>
